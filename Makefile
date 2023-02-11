@@ -8,8 +8,6 @@ setup:
 	touch database/database.sqlite
 	php artisan migrate:refresh
 	php artisan db:seed
-	#npm install
-	#make build-front
 	make ide-helper
 
 watch:
@@ -34,7 +32,7 @@ lint-fix:
 	composer phpcbf
 
 test-coverage:
-	XDEBUG_MODE=coverage ./vendor/bin/sail php artisan test --coverage-clover build/logs/clover.xml
+	XDEBUG_MODE=coverage php artisan test --coverage-clover build/logs/clover.xml
 
 install:
 	composer install

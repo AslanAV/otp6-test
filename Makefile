@@ -8,7 +8,7 @@ setup:
 	touch database/database.sqlite
 	php artisan migrate:refresh
 	php artisan db:seed
-	npm install
+	#npm install
 	make build-front
 	make ide-helper
 

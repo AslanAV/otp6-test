@@ -17,7 +17,8 @@ class GoodFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => fake()->text(15),
+            'cost' => fake()->randomFloat(2, 10, 10000),
         ];
     }
 }

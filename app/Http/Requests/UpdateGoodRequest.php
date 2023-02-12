@@ -13,7 +13,7 @@ class UpdateGoodRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdateGoodRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|min:3|max:255',
+            'cost' => 'required|gte:0'
         ];
     }
 }

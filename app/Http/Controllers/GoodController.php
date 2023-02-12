@@ -5,82 +5,74 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreGoodRequest;
 use App\Http\Requests\UpdateGoodRequest;
 use App\Models\Good;
+use Illuminate\Support\Facades\Auth;
 
 class GoodController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $goods = Good::paginate(15);
+        return view('goods.index', compact('goods'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        abort_if(Auth::guest(),403);
+
+        return view('goods.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreGoodRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreGoodRequest $request)
     {
-        //
+        if (Auth::guest()) {
+            return redirect()->route('goods.index');
+        }
+
+        $validated = $request->validated();
+
+        $good = new Good();
+
+        $good->fill($validated);
+        $good->save();
+
+        flash("Товар успешно добавлен.")->success();
+        return redirect()->route('goods.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Good  $good
-     * @return \Illuminate\Http\Response
-     */
     public function show(Good $good)
     {
-        //
+        return view('goods.show', compact('good'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Good  $good
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Good $good)
     {
-        //
+        return view('goods.edit', compact('good'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateGoodRequest  $request
-     * @param  \App\Models\Good  $good
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateGoodRequest $request, Good $good)
     {
-        //
+        if (Auth::guest()) {
+            return redirect()->route('goods.index');
+        }
+
+        $validated = $request->validated();
+
+        $good->fill($validated);
+        $good->save();
+
+        flash("Товар успешно изменен")->success();
+        return redirect()->route('goods.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Good  $good
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Good $good)
     {
-        //
+//        if ($good->orders()->exists()) {
+//            flash(__('Невозможно удалить товар так как он используется в заказах.'))->error();
+//            return back();
+//        }
+        $good->delete();
+
+        flash(__('Товар успешно удален.'))->success();
+        return redirect()->route('goods.index');
     }
 }

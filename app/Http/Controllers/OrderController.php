@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\Good;
 use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -14,25 +16,34 @@ class OrderController extends Controller
         return view('orders.index', compact('orders'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        abort_if(Auth::guest(),403);
+
+        $goods = Good::pluck('name', 'id');
+
+        return view('orders.create', compact('goods'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreOrderRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreOrderRequest $request)
     {
-        //
+        if (Auth::guest()) {
+            return redirect()->route('orders.index');
+        }
+
+        $validated = $request->validated();
+        $order = new Order();
+        $order->fill($validated);
+//        $order->save();
+
+        if (array_key_exists('goods', $validated)) {
+//            $order->goods()->attach($validated['goods']);
+        }
+
+        dd($order->goods()->sum());
+
+        flash("Заказ успешно добавлен")->success();
+        return redirect()->route('orders.index');
     }
 
     /**

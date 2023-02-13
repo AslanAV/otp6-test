@@ -10,7 +10,7 @@
             @csrf
             <a href="{{ route('orders.create') }}"
                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Создать товар </a>
+                Создать Заказ </a>
         </div>
     @endif
     <div class="row">
@@ -35,7 +35,8 @@
                     <td>{{ $order->sum_of_order }}</td>
                     <td>{{ $order->phone_number }}</td>
                     <td>{{ $order->email }}</td>
-                    <td>{{GeoLocateHelper::getAdressFromGeo($geo)}}</td>
+                    <td>Широта: {{ $geo['geo_lat'] }}, Долгота: {{ $geo['geo_lon'] }}</td>
+{{--                    <td>{{GeoLocateHelper::getAdressFromGeo($geo)}}</td>--}}
                     @if(Auth::user()->name === 'admin')
                         <td>
                             <a

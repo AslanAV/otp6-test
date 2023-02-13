@@ -13,7 +13,7 @@ class StoreOrderRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class StoreOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'phone_number' => 'required|string',
+            'email' => 'required|email',
+            'address' => 'json',
+            'sum_of_order' => 'numeric',
         ];
     }
 }

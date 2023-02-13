@@ -1,6 +1,14 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/41f99a51db2f3b9ed047/maintainability)](https://codeclimate.com/github/AslanAV/otp6-test/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/41f99a51db2f3b9ed047/test_coverage)](https://codeclimate.com/github/AslanAV/otp6-test/test_coverage)
 [![Tests & Lint & Deploy](https://github.com/AslanAV/otp6-test/actions/workflows/main.yml/badge.svg)](https://github.com/AslanAV/otp6-test/actions/workflows/main.yml)
+
+DEMO: https://opt6-test.up.railway.app/
+
+#### admin login details
+```text
+email: admin@gmail.com
+password: password
+```
 # Тестовое OPT6.RU
 
 ### 1. Реализовать crud для работы с заказами/товарами
